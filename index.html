@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdminPro - Gestión Empresarial</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #f3f4f6;
+      color: #1f2937;
+      overflow-x: hidden;
+    }
+
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .auth-box {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .auth-logo {
+      text-align: center;
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .auth-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1f2937;
+    }
+
+    .auth-subtitle {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+      margin-top: 10px;
+    }
+
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+
+    .auth-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .auth-link a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .company-list {
+      margin-top: 20px;
+    }
+
+    .company-item {
+      background: #f9fafb;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .company-item:hover {
+      background: #f3f4f6;
+      border-color: #667eea;
+    }
+
+    .company-name {
+      font-weight: 600;
+      font-size: 16px;
+      color: #1f2937;
+    }
+
+    .company-date {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .app-container {
+      display: none;
+      padding-bottom: 70px;
+    }
+
+    .app-container.active {
+      display: block;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .logo {
+      color: white;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .company-badge {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .notif-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 8px;
+      position: relative;
+      z-index: 110;
+    }
+
+    .notif-badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .notif-panel {
+      position: fixed;
+      top: 60px;
+      right: 0;
+      width: 300px;
+      max-width: 90vw;
+      background: white;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      z-index: 105;
+      max-height: calc(100vh - 130px);
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+    }
+
+    .notif-panel.active {
+      transform: translateX(0);
+    }
+
+    .notif-header {
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .notif-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .notif-item-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .notif-item-text {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100vh;
+      background: white;
+      z-index: 200;
+      transition: left 0.3s;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+      color: white;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .sidebar-subtitle {
+      font-size: 13px;
+      opacity: 0.9;
+      margin-top: 4px;
+    }
+
+    .sidebar-menu {
+      padding: 10px 0;
+    }
+
+    .sidebar-item {
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 15px;
+      color: #374151;
+    }
+
+    .sidebar-item:hover {
+      background: #f3f4f6;
+    }
+
+    .sidebar-item.active {
+      background: #ede9fe;
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 150;
+      display: none;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+
+    .content {
+      margin-top: 60px;
+      padding: 20px 15px;
+      min-height: calc(100vh - 130px);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      padding: 16px;
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .kpi-card.green {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .kpi-card.red {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    }
+
+    .kpi-card.blue {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+
+    .kpi-card.purple {
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .chart-container {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .chart-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 16px;
+    }
+
+    .chart-bar-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      height: 150px;
+      margin-bottom: 8px;
+      border-bottom: 2px solid #e5e7eb;
+      padding: 0 10px;
+    }
+
+    .chart-bar {
+      flex: 1;
+      max-width: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 4px 4px 0 0;
+      position: relative;
+      margin: 0 4px;
+      transition: all 0.3s;
+    }
+
+    .chart-bar:hover {
+      opacity: 0.8;
+      transform: translateY(-4px);
+    }
+
+    .chart-bar-value {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .chart-bar-label {
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 6px;
+    }
+
+    .list-item {
+      background: white;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .list-title {
+      font-weight: 600;
+      font-size: 15px;
+      color: #1f2937;
+    }
+
+    .list-subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .badge-success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .badge-danger {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .badge-warning {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-primary {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .btn-delete {
+      background: #fee2e2;
+      color: #ef4444;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .btn-delete:hover {
+      background: #fecaca;
+    }
+
+    .btn-edit {
+      background: #dbeafe;
+      color: #2563eb;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+      margin-right: 8px;
+    }
+
+    .btn-edit:hover {
+      background: #bfdbfe;
+    }
+
+    .btn-stock {
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.2s;
+      margin: 0 4px;
+    }
+
+    .btn-stock:hover {
+      background: #e5e7eb;
+    }
+
+    .btn-sell {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+      margin-top: 8px;
+    }
+
+    .btn-sell:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    .fab {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 50;
+      transition: all 0.2s;
+    }
+
+    .fab:hover {
+      transform: scale(1.1);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      z-index: 100;
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 10px;
+      transition: all 0.2s;
+      color: #6b7280;
+      font-size: 10px;
+    }
+
+    .nav-item.active {
+      color: #667eea;
+    }
+
+    .nav-icon {
+      font-size: 24px;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      padding: 20px;
+      animation: fadeIn 0.2s;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 450px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-footer {
+      padding: 15px 20px;
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .modal-footer .btn {
+      flex: 1;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .empty-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    .empty-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .tutorial-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      padding: 20px;
+    }
+
+    .tutorial-overlay.active {
+      display: flex;
+    }
+
+    .tutorial-box {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .tutorial-emoji {
+      font-size: 72px;
+      margin-bottom: 20px;
+    }
+
+    .tutorial-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 12px;
+    }
+
+    .tutorial-text {
+      font-size: 15px;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .tutorial-progress {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d1d5db;
+      transition: all 0.3s;
+    }
+
+    .progress-dot.active {
+      background: #667eea;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .tutorial-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .tutorial-buttons .btn {
+      flex: 1;
+    }
+
+    .btn-skip {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .stock-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .stock-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stock-value {
+      font-weight: 600;
+      font-size: 14px;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .alert-box {
+      background: #fee2e2;
+      border-left: 4px solid #ef4444;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .alert-title {
+      font-weight: 600;
+      color: #991b1b;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .alert-item {
+      font-size: 13px;
+      color: #7f1d1d;
+      padding: 6px 0;
+      border-bottom: 1px solid #fecaca;
+    }
+
+    .alert-item:last-child {
+      border-bottom: none;
+    }
+
+    select.form-input {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+
+    @media (max-width: 768px) {
+      .kpi-value {
+        font-size: 20px;
+      }
+      
+      .modal {
+        max-height: 85vh;
+      }
+
+      .notif-panel {
+        width: 100%;
+        max-width: 100vw;
+      }
+
+      .chart-bar-value {
+        font-size: 9px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+    // Estado global
+    var state = {
+      currentUser: null,
+      currentCompany: null,
+      currentView: 'dashboard',
+      sidebarOpen: false,
+      currentModal: null,
+      searchTerm: '',
+      showTutorial: false,
+      tutorialStep: 0,
+      editingClient: null,
+      showNotifications: false
+    };
+
+    // Validación de email
+    function isValidEmail(email) {
+      var validExtensions = ['com', 'cl', 'net', 'org', 'edu', 'gov', 'co', 'us', 'uk', 'es', 'mx', 'ar', 'pe', 've', 'ec', 'bo', 'py', 'uy', 'br', 'ca', 'fr', 'de', 'it', 'jp', 'cn', 'in', 'au', 'nz', 'za'];
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) return false;
+      var extension = email.split('.').pop().toLowerCase();
+      return validExtensions.indexOf(extension) !== -1;
+    }
+
+    // Funciones de storage
+    function saveUsers(users) {
+      localStorage.setItem('adminpro_users', JSON.stringify(users));
+    }
+
+    function getUsers() {
+      var data = localStorage.getItem('adminpro_users');
+      return data ? JSON.parse(data) : [];
+    }
+
+    function saveCompanies(companies) {
+      localStorage.setItem('adminpro_empresas', JSON.stringify(companies));
+    }
+
+    function getCompanies() {
+      var data = localStorage.getItem('adminpro_empresas');
+      return data ? JSON.parse(data) : [];
+    }
+
+    function saveCompanyData(companyId, data) {
+      localStorage.setItem('adminpro_data_' + companyId, JSON.stringify(data));
+    }
+
+    function getCompanyData(companyId) {
+      var data = localStorage.getItem('adminpro_data_' + companyId);
+      return data ? JSON.parse(data) : { transactions: [], products: [], clients: [] };
+    }
+
+    function isTutorialCompleted(companyId) {
+      return localStorage.getItem('tutorial_' + companyId) === 'true';
+    }
+
+    function setTutorialCompleted(companyId) {
+      localStorage.setItem('tutorial_' + companyId, 'true');
+    }
+
+    // Formato de moneda
+    function formatMoney(amount) {
+      var absAmount = Math.abs(amount);
+      var str = absAmount.toString();
+      var result = '';
+      var count = 0;
+      for (var i = str.length - 1; i >= 0; i--) {
+        if (count === 3) {
+          result = '.' + result;
+          count = 0;
+        }
+        result = str[i] + result;
+        count++;
+      }
+      return '$' + result;
+    }
+
+    // Funciones de autenticación
+    function register(fullname, email, password) {
+      if (!fullname || !email || !password) {
+        alert('Todos los campos son obligatorios');
+        return false;
+      }
+      if (!isValidEmail(email)) {
+        alert('Email invalido. Usa una extension valida (.com, .cl, etc.)');
+        return false;
+      }
+      var users = getUsers();
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].email === email) {
+          alert('El email ya esta registrado');
+          return false;
+        }
+      }
+      var newUser = {
+        id: Date.now(),
+        fullname: fullname,
+        email: email,
+        password: password
+      };
+      users.push(newUser);
+      saveUsers(users);
+      alert('Registro exitoso');
+      return true;
+    }
+
+    function login(email, password) {
+      if (!email || !password) {
+        alert('Email y contrasena son obligatorios');
+        return null;
+      }
+      var users = getUsers();
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].email === email && users[i].password === password) {
+          state.currentUser = users[i];
+          return users[i];
+        }
+      }
+      alert('Email o contrasena incorrectos');
+      return null;
+    }
+
+    function logout() {
+      state.currentUser = null;
+      state.currentCompany = null;
+      render();
+    }
+
+    // Funciones de empresas
+    function createCompany(name) {
+      if (!name) {
+        alert('El nombre de la empresa es obligatorio');
+        return false;
+      }
+      var companies = getCompanies();
+      var newCompany = {
+        id: Date.now(),
+        userId: state.currentUser.id,
+        name: name,
+        createdAt: new Date().toISOString().split('T')[0]
+      };
+      companies.push(newCompany);
+      saveCompanies(companies);
+      saveCompanyData(newCompany.id, {
+        transactions: [],
+        products: [],
+        clients: []
+      });
+      return true;
+    }
+
+    function getUserCompanies() {
+      if (!state.currentUser) return [];
+      var companies = getCompanies();
+      var userCompanies = [];
+      for (var i = 0; i < companies.length; i++) {
+        if (companies[i].userId === state.currentUser.id) {
+          userCompanies.push(companies[i]);
+        }
+      }
+      return userCompanies;
+    }
+
+    function selectCompany(companyId) {
+      var companies = getCompanies();
+      for (var i = 0; i < companies.length; i++) {
+        if (companies[i].id === companyId) {
+          state.currentCompany = companies[i];
+          state.currentView = 'dashboard';
+          if (!isTutorialCompleted(companyId)) {
+            state.showTutorial = true;
+            state.tutorialStep = 0;
+          }
+          render();
+          return;
+        }
+      }
+    }
+
+    // CRUD Transacciones
+    function getTransactions() {
+      if (!state.currentCompany) return [];
+      var data = getCompanyData(state.currentCompany.id);
+      return data.transactions || [];
+    }
+
+    function addTransaction(transaction) {
+      var data = getCompanyData(state.currentCompany.id);
+      var newTransaction = {
+        id: Date.now(),
+        type: transaction.type,
+        category: transaction.category,
+        description: transaction.description,
+        amount: transaction.type === 'Egreso' ? -Math.abs(transaction.amount) : Math.abs(transaction.amount),
+        date: transaction.date
+      };
+      data.transactions.push(newTransaction);
+      saveCompanyData(state.currentCompany.id, data);
+      return newTransaction;
+    }
+
+    function deleteTransaction(id) {
+      if (!confirm('Eliminar esta transaccion?')) return;
+      var data = getCompanyData(state.currentCompany.id);
+      var filtered = [];
+      for (var i = 0; i < data.transactions.length; i++) {
+        if (data.transactions[i].id !== id) {
+          filtered.push(data.transactions[i]);
+        }
+      }
+      data.transactions = filtered;
+      saveCompanyData(state.currentCompany.id, data);
+      render();
+    }
+
+    // CRUD Productos
+    function getProducts() {
+      if (!state.currentCompany) return [];
+      var data = getCompanyData(state.currentCompany.id);
+      return data.products || [];
+    }
+
+    function addProduct(product) {
+      var data = getCompanyData(state.currentCompany.id);
+      var newProduct = {
+        id: Date.now(),
+        sku: product.sku,
+        name: product.name,
+        price: product.price,
+        stock: product.stock
+      };
+      data.products.push(newProduct);
+      saveCompanyData(state.currentCompany.id, data);
+    }
+
+    function updateProductStock(productId, newStock) {
+      var data = getCompanyData(state.currentCompany.id);
+      for (var i = 0; i < data.products.length; i++) {
+        if (data.products[i].id === productId) {
+          data.products[i].stock = Math.max(0, newStock);
+          saveCompanyData(state.currentCompany.id, data);
+          render();
+          return;
+        }
+      }
+    }
+
+    function deleteProduct(id) {
+      if (!confirm('Eliminar este producto?')) return;
+      var data = getCompanyData(state.currentCompany.id);
+      var filtered = [];
+      for (var i = 0; i < data.products.length; i++) {
+        if (data.products[i].id !== id) {
+          filtered.push(data.products[i]);
+        }
+      }
+      data.products = filtered;
+      saveCompanyData(state.currentCompany.id, data);
+      render();
+    }
+
+    function sellProduct(productId, quantity, clientId) {
+      var data = getCompanyData(state.currentCompany.id);
+      var product = null;
+      for (var i = 0; i < data.products.length; i++) {
+        if (data.products[i].id === productId) {
+          product = data.products[i];
+          break;
+        }
+      }
+      if (!product) return;
+      if (product.stock < quantity) {
+        alert('Stock insuficiente');
+        return;
+      }
+      product.stock -= quantity;
+      var totalAmount = product.price * quantity;
+      var transaction = {
+        id: Date.now(),
+        type: 'Ingreso',
+        category: 'Ventas',
+        description: 'Venta: ' + product.name + ' (x' + quantity + ')',
+        amount: totalAmount,
+        date: new Date().toISOString().split('T')[0]
+      };
+      data.transactions.push(transaction);
+      if (clientId) {
+        for (var j = 0; j < data.clients.length; j++) {
+          if (data.clients[j].id === clientId) {
+            data.clients[j].total = (data.clients[j].total || 0) + totalAmount;
+            break;
+          }
+        }
+      }
+      saveCompanyData(state.currentCompany.id, data);
+      alert('Venta realizada');
+      render();
+    }
+
+    // CRUD Clientes
+    function getClients() {
+      if (!state.currentCompany) return [];
+      var data = getCompanyData(state.currentCompany.id);
+      return data.clients || [];
+    }
+
+    function addClient(client) {
+      var data = getCompanyData(state.currentCompany.id);
+      var newClient = {
+        id: Date.now(),
+        name: client.name,
+        email: client.email,
+        phone: client.phone,
+        total: client.total || 0
+      };
+      data.clients.push(newClient);
+      saveCompanyData(state.currentCompany.id, data);
+    }
+
+    function updateClient(clientId, updatedData) {
+      var data = getCompanyData(state.currentCompany.id);
+      for (var i = 0; i < data.clients.length; i++) {
+        if (data.clients[i].id === clientId) {
+          data.clients[i].name = updatedData.name;
+          data.clients[i].email = updatedData.email;
+          data.clients[i].phone = updatedData.phone;
+          data.clients[i].total = updatedData.total;
+          saveCompanyData(state.currentCompany.id, data);
+          alert('Cliente actualizado');
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function deleteClient(id) {
+      if (!confirm('Eliminar este cliente?')) return;
+      var data = getCompanyData(state.currentCompany.id);
+      var filtered = [];
+      for (var i = 0; i < data.clients.length; i++) {
+        if (data.clients[i].id !== id) {
+          filtered.push(data.clients[i]);
+        }
+      }
+      data.clients = filtered;
+      saveCompanyData(state.currentCompany.id, data);
+      render();
+    }
+
+    // Calculos
+    function calculateTotals() {
+      var transactions = getTransactions();
+      var income = 0;
+      var expenses = 0;
+      for (var i = 0; i < transactions.length; i++) {
+        if (transactions[i].amount > 0) {
+          income += transactions[i].amount;
+        } else {
+          expenses += Math.abs(transactions[i].amount);
+        }
+      }
+      var balance = income - expenses;
+      return { income: income, expenses: expenses, balance: balance };
+    }
+
+    function getLowStockProducts() {
+      var products = getProducts();
+      var lowStock = [];
+      for (var i = 0; i < products.length; i++) {
+        if (products[i].stock < 10) {
+          lowStock.push(products[i]);
+        }
+      }
+      return lowStock;
+    }
+
+    // Notificaciones
+    function toggleNotifications() {
+      state.showNotifications = !state.showNotifications;
+      render();
+    }
+
+    function getNotifications() {
+      var notifications = [];
+      var lowStock = getLowStockProducts();
+      
+      for (var i = 0; i < lowStock.length; i++) {
+        notifications.push({
+          title: '⚠️ Stock Bajo',
+          text: lowStock[i].name + ' tiene solo ' + lowStock[i].stock + ' unidades'
+        });
+      }
+      
+      var transactions = getTransactions();
+      var today = new Date().toISOString().split('T')[0];
+      var todayTransactions = 0;
+      for (var j = 0; j < transactions.length; j++) {
+        if (transactions[j].date === today) {
+          todayTransactions++;
+        }
+      }
+      
+      if (todayTransactions > 0) {
+        notifications.push({
+          title: '💰 Transacciones de hoy',
+          text: 'Has registrado ' + todayTransactions + ' transacción' + (todayTransactions > 1 ? 'es' : '') + ' hoy'
+        });
+      }
+      
+      if (notifications.length === 0) {
+        notifications.push({
+          title: '✅ Todo al día',
+          text: 'No tienes notificaciones pendientes'
+        });
+      }
+      
+      return notifications;
+    }
+
+    function getChartData() {
+      var transactions = getTransactions();
+      var monthlyData = {};
+      
+      for (var i = 0; i < transactions.length; i++) {
+        var date = new Date(transactions[i].date);
+        var monthKey = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
+        
+        if (!monthlyData[monthKey]) {
+          monthlyData[monthKey] = { income: 0, expenses: 0 };
+        }
+        
+        if (transactions[i].amount > 0) {
+          monthlyData[monthKey].income += transactions[i].amount;
+        } else {
+          monthlyData[monthKey].expenses += Math.abs(transactions[i].amount);
+        }
+      }
+      
+      var months = Object.keys(monthlyData).sort();
+      var lastSixMonths = months.slice(-6);
+      
+      var chartData = [];
+      for (var j = 0; j < lastSixMonths.length; j++) {
+        var monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        var parts = lastSixMonths[j].split('-');
+        var monthIndex = parseInt(parts[1]) - 1;
+        
+        chartData.push({
+          month: monthNames[monthIndex],
+          income: monthlyData[lastSixMonths[j]].income,
+          expenses: monthlyData[lastSixMonths[j]].expenses
+        });
+      }
+      
+      return chartData;
+    }
+
+    // Tutorial
+    var tutorialSteps = [
+      { emoji: '👋', title: 'Bienvenido a AdminPro!', text: 'Tu herramienta completa para gestionar tu negocio desde tu movil' },
+      { emoji: '📊', title: 'Dashboard', text: 'Visualiza tus KPIs principales, ultimas transacciones y alertas de stock bajo' },
+      { emoji: '💰', title: 'Finanzas', text: 'Registra ingresos y egresos, lleva el control total de tu dinero' },
+      { emoji: '📦', title: 'Inventario', text: 'Gestiona productos, actualiza stock y realiza ventas facilmente' },
+      { emoji: '👥', title: 'Clientes', text: 'Administra tu cartera de clientes y su historial de compras' },
+      { emoji: '🚀', title: 'Todo listo!', text: 'Comienza a usar AdminPro y lleva tu negocio al siguiente nivel' }
+    ];
+
+    function nextTutorialStep() {
+      if (state.tutorialStep < tutorialSteps.length - 1) {
+        state.tutorialStep++;
+        render();
+      }
+    }
+
+    function prevTutorialStep() {
+      if (state.tutorialStep > 0) {
+        state.tutorialStep--;
+        render();
+      }
+    }
+
+    function skipTutorial() {
+      state.showTutorial = false;
+      setTutorialCompleted(state.currentCompany.id);
+      render();
+    }
+
+    function completeTutorial() {
+      state.showTutorial = false;
+      setTutorialCompleted(state.currentCompany.id);
+      render();
+    }
+
+    function restartTutorial() {
+      state.showTutorial = true;
+      state.tutorialStep = 0;
+      state.sidebarOpen = false;
+      render();
+    }
+
+    // Navegacion
+    function navigate(view) {
+      state.currentView = view;
+      state.sidebarOpen = false;
+      render();
+    }
+
+    function toggleSidebar() {
+      state.sidebarOpen = !state.sidebarOpen;
+      render();
+    }
+
+    function openModal(modalName) {
+      state.currentModal = modalName;
+      render();
+    }
+
+    function closeModal() {
+      state.currentModal = null;
+      state.editingClient = null;
+      render();
+    }
+
+    // Handlers
+    function handleRegister(e) {
+      e.preventDefault();
+      var fullname = document.getElementById('reg-fullname').value;
+      var email = document.getElementById('reg-email').value;
+      var password = document.getElementById('reg-password').value;
+      if (register(fullname, email, password)) {
+        navigate('login');
+        render();
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      var email = document.getElementById('login-email').value;
+      var password = document.getElementById('login-password').value;
+      var user = login(email, password);
+      if (user) {
+        render();
+      }
+    }
+
+    function handleCreateCompany(e) {
+      e.preventDefault();
+      var name = document.getElementById('company-name').value;
+      if (createCompany(name)) {
+        alert('Empresa creada');
+        render();
+      }
+    }
+
+    function handleAddTransaction(e) {
+      e.preventDefault();
+      var type = document.getElementById('trans-type').value;
+      var category = document.getElementById('trans-category').value;
+      var description = document.getElementById('trans-description').value;
+      var amount = parseFloat(document.getElementById('trans-amount').value);
+      var date = document.getElementById('trans-date').value;
+      if (!description || !amount || !date) {
+        alert('Completa todos los campos obligatorios');
+        return;
+      }
+      addTransaction({ type: type, category: category, description: description, amount: amount, date: date });
+      closeModal();
+      alert('Transaccion agregada');
+      render();
+    }
+
+    function handleAddProduct(e) {
+      e.preventDefault();
+      var sku = document.getElementById('prod-sku').value;
+      var name = document.getElementById('prod-name').value;
+      var price = parseFloat(document.getElementById('prod-price').value);
+      var stock = parseInt(document.getElementById('prod-stock').value);
+      if (!sku || !name || !price || stock === undefined) {
+        alert('Completa todos los campos obligatorios');
+        return;
+      }
+      addProduct({ sku: sku, name: name, price: price, stock: stock });
+      closeModal();
+      alert('Producto agregado');
+      render();
+    }
+
+    function handleAddClient(e) {
+      e.preventDefault();
+      var name = document.getElementById('client-name').value;
+      var email = document.getElementById('client-email').value;
+      var phone = document.getElementById('client-phone').value;
+      var total = parseFloat(document.getElementById('client-total').value) || 0;
+      if (!name || !email || !phone) {
+        alert('Completa todos los campos obligatorios');
+        return;
+      }
+      if (!isValidEmail(email)) {
+        alert('Email invalido. Usa una extension valida (.com, .cl, etc.)');
+        return;
+      }
+      if (state.editingClient) {
+        updateClient(state.editingClient.id, { name: name, email: email, phone: phone, total: total });
+        state.editingClient = null;
+      } else {
+        addClient({ name: name, email: email, phone: phone, total: total });
+        alert('Cliente agregado');
+      }
+      closeModal();
+      render();
+    }
+
+    function handleSellProduct(productId) {
+      var products = getProducts();
+      var product = null;
+      for (var i = 0; i < products.length; i++) {
+        if (products[i].id === productId) {
+          product = products[i];
+          break;
+        }
+      }
+      if (!product) return;
+      var quantity = prompt('Cuantas unidades de "' + product.name + '" deseas vender?\n\nStock disponible: ' + product.stock);
+      if (!quantity) return;
+      var qty = parseInt(quantity);
+      if (isNaN(qty) || qty <= 0) {
+        alert('Cantidad invalida');
+        return;
+      }
+      if (qty > product.stock) {
+        alert('Stock insuficiente');
+        return;
+      }
+      var clients = getClients();
+      var clientId = null;
+      if (clients.length > 0) {
+        var associateClient = confirm('Deseas asociar esta venta a un cliente?');
+        if (associateClient) {
+          var clientsList = '';
+          for (var j = 0; j < clients.length; j++) {
+            clientsList += clients[j].name + ' (' + clients[j].email + ')\n';
+          }
+          var clientEmail = prompt('Ingresa el email del cliente:\n\n' + clientsList);
+          if (clientEmail) {
+            for (var k = 0; k < clients.length; k++) {
+              if (clients[k].email === clientEmail) {
+                clientId = clients[k].id;
+                break;
+              }
+            }
+            if (!clientId) {
+              alert('Cliente no encontrado. La venta se registrara sin cliente.');
+            }
+          }
+        }
+      }
+      sellProduct(productId, qty, clientId);
+    }
+
+    function handleEditClient(clientId) {
+      var clients = getClients();
+      for (var i = 0; i < clients.length; i++) {
+        if (clients[i].id === clientId) {
+          state.editingClient = clients[i];
+          openModal('add-client');
+          return;
+        }
+      }
+    }
+
+    function handleSearch(e) {
+      state.searchTerm = e.target.value.toLowerCase();
+      render();
+    }
+
+    // Componentes UI
+    function AuthScreen() {
+      if (!state.currentUser) {
+        return '<div class="auth-container"><div class="auth-box"><div class="auth-logo">🏢</div><h1 class="auth-title">AdminPro</h1><p class="auth-subtitle">Gestiona tu negocio desde cualquier lugar</p><form id="login-form" onsubmit="handleLogin(event)"><div class="form-group"><label class="form-label">Email</label><input type="email" id="login-email" class="form-input" placeholder="tu@email.com" required></div><div class="form-group"><label class="form-label">Contrasena</label><input type="password" id="login-password" class="form-input" placeholder="••••••••" required></div><button type="submit" class="btn btn-primary">Iniciar Sesion</button></form><div class="auth-link">No tienes cuenta? <a href="#" onclick="navigate(\'register\'); return false;">Registrate</a></div></div></div>';
+      }
+      var companies = getUserCompanies();
+      var html = '<div class="auth-container"><div class="auth-box"><div class="auth-logo">🏢</div><h1 class="auth-title">Selecciona una empresa</h1><p class="auth-subtitle">Hola, ' + state.currentUser.fullname + '</p>';
+      if (companies.length === 0) {
+        html += '<form id="company-form" onsubmit="handleCreateCompany(event)"><div class="form-group"><label class="form-label">Nombre de la empresa</label><input type="text" id="company-name" class="form-input" placeholder="Mi Negocio" required></div><button type="submit" class="btn btn-primary">Crear Empresa</button></form>';
+      } else {
+        html += '<div class="company-list">';
+        for (var i = 0; i < companies.length; i++) {
+          html += '<div class="company-item" onclick="selectCompany(' + companies[i].id + ')"><div class="company-name">' + companies[i].name + '</div><div class="company-date">Creada: ' + companies[i].createdAt + '</div></div>';
+        }
+        html += '</div><button class="btn btn-secondary" onclick="navigate(\'create-company\')">+ Crear Nueva Empresa</button>';
+      }
+      html += '<div class="auth-link"><a href="#" onclick="logout(); return false;">Cerrar Sesion</a></div></div></div>';
+      return html;
+    }
+
+    function RegisterScreen() {
+      return '<div class="auth-container"><div class="auth-box"><div class="auth-logo">📝</div><h1 class="auth-title">Crear Cuenta</h1><p class="auth-subtitle">Unete a AdminPro hoy</p><form id="register-form" onsubmit="handleRegister(event)"><div class="form-group"><label class="form-label">Nombre Completo</label><input type="text" id="reg-fullname" class="form-input" placeholder="Juan Perez" required></div><div class="form-group"><label class="form-label">Email</label><input type="email" id="reg-email" class="form-input" placeholder="tu@email.com" required></div><div class="form-group"><label class="form-label">Contrasena</label><input type="password" id="reg-password" class="form-input" placeholder="••••••••" required></div><button type="submit" class="btn btn-primary">Registrarse</button></form><div class="auth-link">Ya tienes cuenta? <a href="#" onclick="navigate(\'login\'); return false;">Inicia Sesion</a></div></div></div>';
+    }
+
+    function CreateCompanyScreen() {
+      return '<div class="auth-container"><div class="auth-box"><div class="auth-logo">➕</div><h1 class="auth-title">Nueva Empresa</h1><p class="auth-subtitle">Crea una nueva empresa para gestionar</p><form id="company-form" onsubmit="handleCreateCompany(event)"><div class="form-group"><label class="form-label">Nombre de la empresa</label><input type="text" id="company-name" class="form-input" placeholder="Mi Negocio" required></div><button type="submit" class="btn btn-primary">Crear Empresa</button><button type="button" class="btn btn-secondary" onclick="state.currentUser = null; render();">Volver</button></form></div></div>';
+    }
+
+    function Tutorial() {
+      if (!state.showTutorial) return '';
+      var step = tutorialSteps[state.tutorialStep];
+      var isLastStep = state.tutorialStep === tutorialSteps.length - 1;
+      var html = '<div class="tutorial-overlay active"><div class="tutorial-box"><div class="tutorial-emoji">' + step.emoji + '</div><h2 class="tutorial-title">' + step.title + '</h2><p class="tutorial-text">' + step.text + '</p><div class="tutorial-progress">';
+      for (var i = 0; i < tutorialSteps.length; i++) {
+        html += '<div class="progress-dot' + (i === state.tutorialStep ? ' active' : '') + '"></div>';
+      }
+      html += '</div><div class="tutorial-buttons">';
+      if (state.tutorialStep > 0) {
+        html += '<button class="btn btn-secondary" onclick="prevTutorialStep()">Anterior</button>';
+      } else {
+        html += '<button class="btn btn-skip" onclick="skipTutorial()">Omitir</button>';
+      }
+      if (isLastStep) {
+        html += '<button class="btn btn-primary" onclick="completeTutorial()">Comenzar!</button>';
+      } else {
+        html += '<button class="btn btn-primary" onclick="nextTutorialStep()">Siguiente</button>';
+      }
+      html += '</div></div></div>';
+      return html;
+    }
+
+    function Header() {
+      var notifications = getNotifications();
+      var hasAlerts = notifications.length > 1 || notifications[0].title !== '✅ Todo al día';
+      return '<div class="header"><div class="header-left"><button class="menu-btn" onclick="toggleSidebar()">☰</button><div class="logo">AdminPro</div><div class="company-badge">' + (state.currentCompany ? state.currentCompany.name : '') + '</div></div><button class="notif-btn" onclick="toggleNotifications()">🔔' + (hasAlerts ? '<span class="notif-badge"></span>' : '') + '</button></div>';
+    }
+
+    function Sidebar() {
+      var menuItems = [
+        { icon: '📊', label: 'Dashboard', view: 'dashboard' },
+        { icon: '💰', label: 'Finanzas', view: 'finanzas' },
+        { icon: '📦', label: 'Inventario', view: 'inventario' },
+        { icon: '👥', label: 'Clientes', view: 'clientes' }
+      ];
+      var html = '<div class="sidebar-overlay' + (state.sidebarOpen ? ' active' : '') + '" onclick="toggleSidebar()"></div><div class="sidebar' + (state.sidebarOpen ? ' active' : '') + '"><div class="sidebar-header"><div class="sidebar-title">AdminPro</div><div class="sidebar-subtitle">' + (state.currentUser ? state.currentUser.fullname : '') + '</div></div><div class="sidebar-menu">';
+      for (var i = 0; i < menuItems.length; i++) {
+        html += '<div class="sidebar-item' + (state.currentView === menuItems[i].view ? ' active' : '') + '" onclick="navigate(\'' + menuItems[i].view + '\')"><span>' + menuItems[i].icon + '</span><span>' + menuItems[i].label + '</span></div>';
+      }
+      html += '<div class="sidebar-item" onclick="restartTutorial()"><span>❓</span><span>Ver Tutorial</span></div><div class="sidebar-item" onclick="state.currentCompany = null; render();"><span>🔄</span><span>Cambiar Empresa</span></div><div class="sidebar-item" onclick="logout()"><span>🚪</span><span>Cerrar Sesion</span></div></div></div>';
+      return html;
+    }
+
+    function NotificationPanel() {
+      if (!state.showNotifications) return '';
+      
+      var notifications = getNotifications();
+      var html = '<div class="notif-panel active"><div class="notif-header">Notificaciones</div>';
+      
+      for (var i = 0; i < notifications.length; i++) {
+        html += '<div class="notif-item"><div class="notif-item-title">' + notifications[i].title + '</div><div class="notif-item-text">' + notifications[i].text + '</div></div>';
+      }
+      
+      html += '</div>';
+      return html;
+    }
+
+    function BottomNav() {
+      var navItems = [
+        { icon: '📊', label: 'Dashboard', view: 'dashboard' },
+        { icon: '💰', label: 'Finanzas', view: 'finanzas' },
+        { icon: '📦', label: 'Inventario', view: 'inventario' },
+        { icon: '👥', label: 'Clientes', view: 'clientes' }
+      ];
+      var html = '<div class="bottom-nav">';
+      for (var i = 0; i < navItems.length; i++) {
+        html += '<div class="nav-item' + (state.currentView === navItems[i].view ? ' active' : '') + '" onclick="navigate(\'' + navItems[i].view + '\')"><div class="nav-icon">' + navItems[i].icon + '</div><div class="nav-label">' + navItems[i].label + '</div></div>';
+      }
+      html += '</div>';
+      return html;
+    }
+
+    function Dashboard() {
+      var totals = calculateTotals();
+      var products = getProducts();
+      var transactions = getTransactions();
+      var lowStock = getLowStockProducts();
+      var chartData = getChartData();
+      var lastTransactions = [];
+      for (var i = transactions.length - 1; i >= Math.max(0, transactions.length - 5); i--) {
+        lastTransactions.push(transactions[i]);
+      }
+      var html = '<div class="section' + (state.currentView === 'dashboard' ? ' active' : '') + '"><div class="kpi-grid">';
+      html += '<div class="kpi-card green"><div class="kpi-label">Total Ingresos</div><div class="kpi-value">' + formatMoney(totals.income) + '</div></div>';
+      html += '<div class="kpi-card red"><div class="kpi-label">Total Egresos</div><div class="kpi-value">' + formatMoney(totals.expenses) + '</div></div>';
+      html += '<div class="kpi-card blue"><div class="kpi-label">Balance Neto</div><div class="kpi-value">' + formatMoney(totals.balance) + '</div></div>';
+      html += '<div class="kpi-card purple"><div class="kpi-label">Total Productos</div><div class="kpi-value">' + products.length + '</div></div>';
+      html += '</div>';
+      
+      if (chartData.length > 0) {
+        var maxValue = 0;
+        for (var m = 0; m < chartData.length; m++) {
+          if (chartData[m].income > maxValue) maxValue = chartData[m].income;
+          if (chartData[m].expenses > maxValue) maxValue = chartData[m].expenses;
+        }
+        
+        html += '<div class="chart-container"><div class="chart-title">📊 Ingresos vs Egresos (Últimos 6 meses)</div><div class="chart-bar-container">';
+        
+        for (var n = 0; n < chartData.length; n++) {
+          var incomeHeight = maxValue > 0 ? (chartData[n].income / maxValue * 100) : 0;
+          var expensesHeight = maxValue > 0 ? (chartData[n].expenses / maxValue * 100) : 0;
+          
+          html += '<div style="flex: 1; display: flex; flex-direction: column; align-items: center; margin: 0 4px;"><div style="display: flex; gap: 4px; align-items: flex-end; height: 150px;"><div class="chart-bar" style="height: ' + incomeHeight + '%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); max-width: 20px;"><div class="chart-bar-value" style="color: #10b981;">' + formatMoney(chartData[n].income) + '</div></div><div class="chart-bar" style="height: ' + expensesHeight + '%; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); max-width: 20px;"><div class="chart-bar-value" style="color: #ef4444;">' + formatMoney(chartData[n].expenses) + '</div></div></div><div class="chart-bar-label">' + chartData[n].month + '</div></div>';
+        }
+        
+        html += '</div></div>';
+      }
+      
+      if (lowStock.length > 0) {
+        html += '<div class="alert-box"><div class="alert-title">⚠️ Stock Bajo (' + lowStock.length + ' productos)</div>';
+        for (var j = 0; j < lowStock.length; j++) {
+          html += '<div class="alert-item">' + lowStock[j].name + ' - Stock: ' + lowStock[j].stock + ' unidades</div>';
+        }
+        html += '</div>';
+      }
+      html += '<div class="card"><div class="card-header"><div class="card-title">Ultimas Transacciones</div></div>';
+      if (lastTransactions.length === 0) {
+        html += '<div class="empty-state"><div class="empty-icon">💸</div><div class="empty-title">Sin transacciones</div><div class="empty-subtitle">Comienza agregando tu primera transaccion</div></div>';
+      } else {
+        for (var k = 0; k < lastTransactions.length; k++) {
+          var t = lastTransactions[k];
+          html += '<div class="list-item"><div class="list-header"><div><div class="list-title">' + t.description + '</div><div class="list-subtitle">' + t.date + '</div></div><div><span class="badge ' + (t.amount > 0 ? 'badge-success' : 'badge-danger') + '">' + t.type + '</span><div style="text-align: right; font-weight: 700; font-size: 16px; margin-top: 4px;">' + formatMoney(t.amount) + '</div></div></div></div>';
+        }
+      }
+      html += '</div></div>';
+      return html;
+    }
+
+    function Finanzas() {
+      var transactions = getTransactions();
+      var totals = calculateTotals();
+      var html = '<div class="section' + (state.currentView === 'finanzas' ? ' active' : '') + '"><div class="card"><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;"><div><div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Ingresos</div><div style="font-size: 20px; font-weight: 700; color: #10b981;">' + formatMoney(totals.income) + '</div></div><div><div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Egresos</div><div style="font-size: 20px; font-weight: 700; color: #ef4444;">' + formatMoney(totals.expenses) + '</div></div></div></div>';
+      if (transactions.length === 0) {
+        html += '<div class="empty-state"><div class="empty-icon">💰</div><div class="empty-title">Sin transacciones</div><div class="empty-subtitle">Usa el boton + para agregar tu primera transaccion</div></div>';
+      } else {
+        for (var i = transactions.length - 1; i >= 0; i--) {
+          var t = transactions[i];
+          html += '<div class="list-item"><div class="list-header"><div style="flex: 1;"><div class="list-title">' + t.description + '</div><div class="list-subtitle">' + t.category + ' • ' + t.date + '</div><span class="badge ' + (t.amount > 0 ? 'badge-success' : 'badge-danger') + '" style="margin-top: 6px;">' + t.type + '</span></div><div style="text-align: right;"><div style="font-weight: 700; font-size: 18px; color: ' + (t.amount > 0 ? '#10b981' : '#ef4444') + '; margin-bottom: 8px;">' + formatMoney(t.amount) + '</div><button class="btn-delete" onclick="deleteTransaction(' + t.id + ')">🗑️</button></div></div></div>';
+        }
+      }
+      html += '<button class="fab" onclick="openModal(\'add-transaction\')">+</button></div>';
+      return html;
+    }
+
+    function Inventario() {
+      var allProducts = getProducts();
+      var products = [];
+      if (state.searchTerm) {
+        for (var i = 0; i < allProducts.length; i++) {
+          if (allProducts[i].name.toLowerCase().indexOf(state.searchTerm) !== -1 || allProducts[i].sku.toLowerCase().indexOf(state.searchTerm) !== -1) {
+            products.push(allProducts[i]);
+          }
+        }
+      } else {
+        products = allProducts;
+      }
+      var html = '<div class="section' + (state.currentView === 'inventario' ? ' active' : '') + '"><input type="text" class="search-box" placeholder="🔍 Buscar por nombre o SKU..." value="' + state.searchTerm + '" oninput="handleSearch(event)">';
+      if (products.length === 0 && !state.searchTerm) {
+        html += '<div class="empty-state"><div class="empty-icon">📦</div><div class="empty-title">Sin productos</div><div class="empty-subtitle">Usa el boton + para agregar tu primer producto</div></div>';
+      } else if (products.length === 0 && state.searchTerm) {
+        html += '<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-title">Sin resultados</div><div class="empty-subtitle">No se encontraron productos</div></div>';
+      } else {
+        for (var j = 0; j < products.length; j++) {
+          var p = products[j];
+          html += '<div class="list-item"><div class="list-header"><div style="flex: 1;"><div class="list-title">' + p.name + '</div><div class="list-subtitle">SKU: ' + p.sku + '</div><span class="badge ' + (p.stock < 10 ? 'badge-danger' : 'badge-success') + '" style="margin-top: 6px;">Stock: ' + p.stock + '</span></div><div style="text-align: right;"><div style="font-weight: 700; font-size: 18px; color: #667eea; margin-bottom: 8px;">' + formatMoney(p.price) + '</div><button class="btn-delete" onclick="deleteProduct(' + p.id + ')">🗑️</button></div></div><div class="stock-info"><div class="stock-controls"><button class="btn-stock" onclick="updateProductStock(' + p.id + ', ' + (p.stock - 1) + ')">−</button><span class="stock-value">' + p.stock + '</span><button class="btn-stock" onclick="updateProductStock(' + p.id + ', ' + (p.stock + 1) + ')">+</button></div><button class="btn-sell" onclick="handleSellProduct(' + p.id + ')">💰 Vender</button></div></div>';
+        }
+      }
+      html += '<button class="fab" onclick="openModal(\'add-product\')">+</button></div>';
+      return html;
+    }
+
+    function Clientes() {
+      var clients = getClients();
+      var html = '<div class="section' + (state.currentView === 'clientes' ? ' active' : '') + '">';
+      if (clients.length === 0) {
+        html += '<div class="empty-state"><div class="empty-icon">👥</div><div class="empty-title">Sin clientes</div><div class="empty-subtitle">Usa el boton + para agregar tu primer cliente</div></div>';
+      } else {
+        for (var i = 0; i < clients.length; i++) {
+          var c = clients[i];
+          html += '<div class="list-item"><div class="list-header"><div style="flex: 1;"><div class="list-title">' + c.name + '</div><div class="list-subtitle">' + c.email + '</div><div class="list-subtitle">' + c.phone + '</div><span class="badge badge-primary" style="margin-top: 6px;">Total gastado: ' + formatMoney(c.total || 0) + '</span></div><div style="text-align: right;"><button class="btn-edit" onclick="handleEditClient(' + c.id + ')">✏️</button><button class="btn-delete" onclick="deleteClient(' + c.id + ')">🗑️</button></div></div></div>';
+        }
+      }
+      html += '<button class="fab" onclick="openModal(\'add-client\')">+</button></div>';
+      return html;
+    }
+
+    function Modals() {
+      var modalContent = '';
+      if (state.currentModal === 'add-transaction') {
+        var today = new Date().toISOString().split('T')[0];
+        modalContent = '<div class="modal-overlay active" onclick="if(event.target === this) closeModal()"><div class="modal"><div class="modal-header"><div class="modal-title">Nueva Transaccion</div><button class="modal-close" onclick="closeModal()">×</button></div><form id="transaction-form" onsubmit="handleAddTransaction(event)"><div class="modal-body"><div class="form-group"><label class="form-label">Tipo *</label><select id="trans-type" class="form-input" required><option value="Ingreso">Ingreso</option><option value="Egreso">Egreso</option></select></div><div class="form-group"><label class="form-label">Categoria</label><input type="text" id="trans-category" class="form-input" placeholder="Ej: Ventas, Proveedores"></div><div class="form-group"><label class="form-label">Descripcion *</label><input type="text" id="trans-description" class="form-input" placeholder="Descripcion de la transaccion" required></div><div class="form-group"><label class="form-label">Monto *</label><input type="number" id="trans-amount" class="form-input" placeholder="0" min="0" step="1" required></div><div class="form-group"><label class="form-label">Fecha *</label><input type="date" id="trans-date" class="form-input" value="' + today + '" required></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button><button type="submit" class="btn btn-primary">Guardar</button></div></form></div></div>';
+      }
+      if (state.currentModal === 'add-product') {
+        modalContent = '<div class="modal-overlay active" onclick="if(event.target === this) closeModal()"><div class="modal"><div class="modal-header"><div class="modal-title">Nuevo Producto</div><button class="modal-close" onclick="closeModal()">×</button></div><form id="product-form" onsubmit="handleAddProduct(event)"><div class="modal-body"><div class="form-group"><label class="form-label">SKU *</label><input type="text" id="prod-sku" class="form-input" placeholder="PROD-001" required></div><div class="form-group"><label class="form-label">Nombre *</label><input type="text" id="prod-name" class="form-input" placeholder="Nombre del producto" required></div><div class="form-group"><label class="form-label">Precio *</label><input type="number" id="prod-price" class="form-input" placeholder="0" min="0" step="1" required></div><div class="form-group"><label class="form-label">Stock Inicial *</label><input type="number" id="prod-stock" class="form-input" placeholder="0" min="0" step="1" required></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button><button type="submit" class="btn btn-primary">Guardar</button></div></form></div></div>';
+      }
+      if (state.currentModal === 'add-client') {
+        var isEditing = !!state.editingClient;
+        var client = state.editingClient || {};
+        modalContent = '<div class="modal-overlay active" onclick="if(event.target === this) closeModal()"><div class="modal"><div class="modal-header"><div class="modal-title">' + (isEditing ? 'Editar Cliente' : 'Nuevo Cliente') + '</div><button class="modal-close" onclick="closeModal()">×</button></div><form id="client-form" onsubmit="handleAddClient(event)"><div class="modal-body"><div class="form-group"><label class="form-label">Nombre *</label><input type="text" id="client-name" class="form-input" placeholder="Nombre del cliente" value="' + (client.name || '') + '" required></div><div class="form-group"><label class="form-label">Email *</label><input type="email" id="client-email" class="form-input" placeholder="cliente@email.com" value="' + (client.email || '') + '" required></div><div class="form-group"><label class="form-label">Telefono *</label><input type="tel" id="client-phone" class="form-input" placeholder="+56912345678" value="' + (client.phone || '') + '" required></div><div class="form-group"><label class="form-label">Total Gastado</label><input type="number" id="client-total" class="form-input" placeholder="0" min="0" step="1" value="' + (client.total || 0) + '"></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button><button type="submit" class="btn btn-primary">' + (isEditing ? 'Actualizar' : 'Guardar') + '</button></div></form></div></div>';
+      }
+      return modalContent;
+    }
+
+    function render() {
+      var root = document.getElementById('root');
+      if (!state.currentUser) {
+        if (state.currentView === 'register') {
+          root.innerHTML = RegisterScreen();
+        } else {
+          state.currentView = 'login';
+          root.innerHTML = AuthScreen();
+        }
+        return;
+      }
+      if (!state.currentCompany) {
+        if (state.currentView === 'create-company') {
+          root.innerHTML = CreateCompanyScreen();
+        } else {
+          root.innerHTML = AuthScreen();
+        }
+        return;
+      }
+      root.innerHTML = Header() + Sidebar() + NotificationPanel() + '<div class="app-container active"><div class="content">' + Dashboard() + Finanzas() + Inventario() + Clientes() + '</div></div>' + BottomNav() + Modals() + Tutorial();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      render();
+    });
+
+    window.navigate = navigate;
+    window.toggleSidebar = toggleSidebar;
+    window.toggleNotifications = toggleNotifications;
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+    window.handleRegister = handleRegister;
+    window.handleLogin = handleLogin;
+    window.handleCreateCompany = handleCreateCompany;
+    window.handleAddTransaction = handleAddTransaction;
+    window.handleAddProduct = handleAddProduct;
+    window.handleAddClient = handleAddClient;
+    window.deleteTransaction = deleteTransaction;
+    window.deleteProduct = deleteProduct;
+    window.deleteClient = deleteClient;
+    window.updateProductStock = updateProductStock;
+    window.handleSellProduct = handleSellProduct;
+    window.handleEditClient = handleEditClient;
+    window.handleSearch = handleSearch;
+    window.selectCompany = selectCompany;
+    window.logout = logout;
+    window.nextTutorialStep = nextTutorialStep;
+    window.prevTutorialStep = prevTutorialStep;
+    window.skipTutorial = skipTutorial;
+    window.completeTutorial = completeTutorial;
+    window.restartTutorial = restartTutorial;
+    window.render = render;
+  </script>
+</body>
+</html>
+      
